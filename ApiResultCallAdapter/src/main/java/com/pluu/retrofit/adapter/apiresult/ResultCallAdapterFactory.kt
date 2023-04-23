@@ -1,5 +1,6 @@
 package com.pluu.retrofit.adapter.apiresult
 
+import com.pluu.retrofit.adapter.apiresult.error.ApiError
 import com.pluu.retrofit.adapter.apiresult.network.NetworkCallAdapter
 import retrofit2.Call
 import retrofit2.CallAdapter
@@ -36,18 +37,17 @@ class ResultCallAdapterFactory : CallAdapter.Factory() {
         val wrapperType = getParameterUpperBound(0, returnType)
         return when (getRawType(wrapperType)) {
             ApiResult::class.java -> {
-                val bodyType = extractErrorAndReturnType(wrapperType, returnType)
-                NetworkCallAdapter(bodyType)
-//                val (errorType, bodyType) = extractErrorAndReturnType(wrapperType, returnType)
-//                if (errorType == ApiError::class.java)
-//                    NetworkCallAdapter(bodyType)
-//                else
-//                    ResultCallAdapter<Type>(retrofit, errorType, bodyType)
+                val (errorType, bodyType) = extractErrorAndReturnType(wrapperType, returnType)
+                if (errorType == ApiError::class.java) {
+                    NetworkCallAdapter(bodyType)
+                } else {
+                    ResultCallAdapter(retrofit, errorType, bodyType)
+                }
             }
 
-//            ResponseE::class.java -> {
-//                val bodyType = extractErrorAndReturnType(wrapperType, returnType)
-//                ResultCallResponseAdapter<Type>(retrofit, errorType, bodyType)
+//            ResponseW::class.java -> {
+//                val (errorType, bodyType) = extractErrorAndReturnType(wrapperType, returnType)
+//                ResultCallResponseAdapter(retrofit, errorType, bodyType)
 //            }
 
             else -> null
@@ -58,7 +58,7 @@ class ResultCallAdapterFactory : CallAdapter.Factory() {
     private inline fun extractErrorAndReturnType(
         wrapperType: Type,
         returnType: ParameterizedType
-    ): Type {
+    ): Pair<Type, Type> {
         if (wrapperType !is ParameterizedType) {
             val name = parseTypeName(returnType)
             throw IllegalArgumentException(
@@ -66,7 +66,7 @@ class ResultCallAdapterFactory : CallAdapter.Factory() {
                         "$name<ErrorBody, ResponseBody> or $name<out ErrorBody, out ResponseBody>"
             )
         }
-        return getParameterUpperBound(0, wrapperType)
+        return ApiError::class.java to getParameterUpperBound(0, wrapperType)
     }
 }
 

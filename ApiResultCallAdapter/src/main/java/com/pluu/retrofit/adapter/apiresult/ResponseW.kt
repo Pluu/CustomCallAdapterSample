@@ -3,7 +3,7 @@ package com.pluu.retrofit.adapter.apiresult
 import okhttp3.Headers
 import okhttp3.Response
 
-data class ResponseE<R>(
+data class ResponseW<R>(
     val raw: Response,
     val body: ApiResult<R>
 ) {
@@ -13,5 +13,7 @@ data class ResponseE<R>(
 
     val headers: Headers = raw.headers()
 
-    val isSuccessful: Boolean = raw.isSuccessful
+    val isSuccessful: Boolean = body.isSuccess()
+
+    val isError: Boolean = body.isError()
 }

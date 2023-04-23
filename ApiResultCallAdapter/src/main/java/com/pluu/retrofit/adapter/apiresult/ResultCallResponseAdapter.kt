@@ -21,12 +21,12 @@ internal class ResultCallResponseAdapter<R>(
     private val errorConverter: Converter<ResponseBody, ApiError> =
         retrofit.responseBodyConverter(errorType, arrayOfNulls(0))
 
-    override fun adapt(call: Call<R>): Call<ResponseE<R>> =
-        ResponseECall(call, errorConverter, bodyType)
+    override fun adapt(call: Call<R>): Call<ResponseW<R>> =
+        ResponseWCall(call, errorConverter, bodyType)
 
     override fun responseType(): Type = bodyType
 
-    class ResponseECall<E : ApiError, R>(
+    class ResponseWCall<E : ApiError, R>(
         private val original: Call<R>,
         private val errorConverter: Converter<ResponseBody, E>,
         private val bodyType: Type
@@ -36,13 +36,13 @@ internal class ResultCallResponseAdapter<R>(
             original.enqueue(object : Callback<R> {
 
                 override fun onFailure(call: Call<R>, t: Throwable) {
-                    callback.onFailure(this@ResponseECall, t)
+                    callback.onFailure(this@ResponseWCall, t)
                 }
 
                 override fun onResponse(call: Call<R>, response: Response<R>) {
                     onResponseConvert(
                         callback,
-                        this@ResponseECall,
+                        this@ResponseWCall,
                         errorConverter,
                         bodyType,
                         response,
@@ -65,8 +65,8 @@ internal class ResultCallResponseAdapter<R>(
             })
         }
 
-        override fun clone(): Call<ResponseE<R>> =
-            ResponseECall(original.clone(), errorConverter, bodyType)
+        override fun clone(): Call<ResponseW<R>> =
+            ResponseWCall(original.clone(), errorConverter, bodyType)
 
         override fun execute(): Response<ResponseE<R>> =
             throw UnsupportedOperationException("This adapter does not support sync execution")
