@@ -16,7 +16,7 @@ object DataSource {
                 this.setLevel(HttpLoggingInterceptor.Level.BASIC)
             }
         )
-        .build();
+        .build()
 
     private val retrofit = Retrofit.Builder()
         .client(client)
