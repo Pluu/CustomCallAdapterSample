@@ -4,6 +4,19 @@
 > 
 > 참고 : [Arrow Retrofit](https://github.com/arrow-kt/arrow/tree/main/arrow-libs/core/arrow-core-retrofit)
 
+## Usage
+
+Retrofit 인스턴스를 빌드할 때 `ResultCallAdapterFactory`를 CallAdapterFactory에 추가합니다.
+
+```kotlin
+import com.pluu.retrofit.adapter.ResultCallAdapterFactory
+import retrofit2.Retrofit
+
+Retrofit.Builder()
+ ...
+ .addCallAdapterFactory(ResultCallAdapterFactory())
+ .build()
+```
 
 ### Define Retrofit Service
 
