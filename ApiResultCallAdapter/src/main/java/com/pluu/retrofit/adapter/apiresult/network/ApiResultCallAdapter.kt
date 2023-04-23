@@ -12,7 +12,7 @@ import retrofit2.Response
 import java.io.IOException
 import java.lang.reflect.Type
 
-internal class NetworkCallAdapter<R>(
+internal class ApiResultCallAdapter<R>(
     private val successType: Type
 ) : CallAdapter<R, Call<ApiResult<R?>>> {
 

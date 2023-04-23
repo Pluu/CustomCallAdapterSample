@@ -1,6 +1,8 @@
-package com.pluu.retrofit.adapter.apiresult
+package com.pluu.retrofit.adapter.apiresult.network
 
+import com.pluu.retrofit.adapter.apiresult.ApiResult
 import com.pluu.retrofit.adapter.apiresult.error.ApiError
+import com.pluu.retrofit.adapter.apiresult.onResponseConvert
 import okhttp3.Request
 import okhttp3.ResponseBody
 import okio.Timeout
@@ -12,63 +14,55 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import java.lang.reflect.Type
 
-internal class ResultCallResponseAdapter<R>(
+internal class NonApiErrorApiResultCallAdapter<R>(
     retrofit: Retrofit,
     errorType: Type,
     private val bodyType: Type
-) : CallAdapter<R, Call<ResponseE<R>>> {
+) : CallAdapter<R, Call<ApiResult<R>>> {
 
     private val errorConverter: Converter<ResponseBody, ApiError> =
         retrofit.responseBodyConverter(errorType, arrayOfNulls(0))
 
-    override fun adapt(call: Call<R>): Call<ResponseW<R>> =
-        ResponseWCall(call, errorConverter, bodyType)
+    override fun adapt(call: Call<R>): Call<ApiResult<R>> =
+        ApiResultCall(call, errorConverter, bodyType)
 
     override fun responseType(): Type = bodyType
 
-    class ResponseWCall<E : ApiError, R>(
+    class ApiResultCall<E : ApiError, R>(
         private val original: Call<R>,
         private val errorConverter: Converter<ResponseBody, E>,
         private val bodyType: Type
-    ) : Call<ResponseE<R>> {
+    ) : Call<ApiResult<R>> {
 
-        override fun enqueue(callback: Callback<ResponseE<R>>) {
+        override fun enqueue(callback: Callback<ApiResult<R>>) {
             original.enqueue(object : Callback<R> {
 
                 override fun onFailure(call: Call<R>, t: Throwable) {
-                    callback.onFailure(this@ResponseWCall, t)
+                    callback.onFailure(this@ApiResultCall, t)
                 }
 
                 override fun onResponse(call: Call<R>, response: Response<R>) {
                     onResponseConvert(
                         callback,
-                        this@ResponseWCall,
+                        this@ApiResultCall,
                         errorConverter,
                         bodyType,
                         response,
-                        { body, responseT ->
-                            Response.success(
-                                responseT.code(),
-                                ResponseE(responseT.raw(), ApiResult.successOf(body))
-                            )
+                        { body, _ ->
+                            Response.success(response.code(), ApiResult.successOf(body))
                         },
-                        { errorBody, responseV ->
-                            Response.success(
-                                ResponseE(
-                                    responseV.raw(),
-                                    ApiResult.errorOf(errorBody)
-                                )
-                            )
+                        { errorBody, _ ->
+                            Response.success(ApiResult.errorOf(errorBody))
                         }
                     )
                 }
             })
         }
 
-        override fun clone(): Call<ResponseW<R>> =
-            ResponseWCall(original.clone(), errorConverter, bodyType)
+        override fun clone(): Call<ApiResult<R>> =
+            ApiResultCall(original.clone(), errorConverter, bodyType)
 
-        override fun execute(): Response<ResponseE<R>> =
+        override fun execute(): Response<ApiResult<R>> =
             throw UnsupportedOperationException("This adapter does not support sync execution")
 
         override fun isExecuted(): Boolean = original.isExecuted

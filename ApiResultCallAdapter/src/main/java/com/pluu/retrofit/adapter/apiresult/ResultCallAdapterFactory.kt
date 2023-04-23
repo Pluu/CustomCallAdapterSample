@@ -1,7 +1,8 @@
 package com.pluu.retrofit.adapter.apiresult
 
 import com.pluu.retrofit.adapter.apiresult.error.ApiError
-import com.pluu.retrofit.adapter.apiresult.network.NetworkCallAdapter
+import com.pluu.retrofit.adapter.apiresult.network.ApiResultCallAdapter
+import com.pluu.retrofit.adapter.apiresult.network.NonApiErrorApiResultCallAdapter
 import retrofit2.Call
 import retrofit2.CallAdapter
 import retrofit2.Retrofit
@@ -39,9 +40,9 @@ class ResultCallAdapterFactory : CallAdapter.Factory() {
             ApiResult::class.java -> {
                 val (errorType, bodyType) = extractErrorAndReturnType(wrapperType, returnType)
                 if (errorType == ApiError::class.java) {
-                    NetworkCallAdapter(bodyType)
+                    ApiResultCallAdapter(bodyType)
                 } else {
-                    ResultCallAdapter(retrofit, errorType, bodyType)
+                    NonApiErrorApiResultCallAdapter(retrofit, errorType, bodyType)
                 }
             }
 
