@@ -10,6 +10,7 @@ import com.pluu.calladapter.sample.data.model.User
 import com.pluu.calladapter.sample.ui.model.ErrorBundle
 import com.pluu.retrofit.adapter.apiresult.onFailure
 import com.pluu.retrofit.adapter.apiresult.onSuccess
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import logcat.logcat
 
@@ -22,9 +23,31 @@ class MainViewModel : ViewModel() {
     private val _userEvent = MutableLiveData<User>()
     val userEvent: LiveData<User> get() = _userEvent
 
+    fun tryCoroutineNetworkErrorDefault() {
+        val ceh = CoroutineExceptionHandler { _, t ->
+            _showErrorBundle.value = ErrorBundle(t)
+        }
+        viewModelScope.launch(ceh) {
+            val result = api.tryNetworkErrorDefault()
+            logcat { "Success: $result" }
+            _userEvent.value = result
+        }
+    }
+
+    fun trySuccessCaseDefault() {
+        val ceh = CoroutineExceptionHandler { _, t ->
+            _showErrorBundle.value = ErrorBundle(t)
+        }
+        viewModelScope.launch(ceh) {
+            val result = api.getUserDefault()
+            logcat { "Success: $result" }
+            _userEvent.value = result
+        }
+    }
+
     fun tryCoroutineNetworkError() {
         viewModelScope.launch {
-            api.suspendTryNetworkError()
+            api.tryNetworkError()
                 .onSuccess { result ->
                     logcat { "Success: $result" }
                     _userEvent.value = result
@@ -36,7 +59,7 @@ class MainViewModel : ViewModel() {
 
     fun trySuccessCase() {
         viewModelScope.launch {
-            api.suspendGetUser()
+            api.getUser()
                 .onSuccess { result ->
                     logcat { "Success: $result" }
                     _userEvent.value = result

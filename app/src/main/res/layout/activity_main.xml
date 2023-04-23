@@ -15,9 +15,29 @@
         android:textStyle="bold" />
 
     <Button
+        android:id="@+id/btnCoroutineNetworkErrorDefault"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="#009688"
+        android:text="[Default]\nNetwork Error"
+        android:textAllCaps="false"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btnSuccessCaseDefault"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#009688"
+        android:text="[Default]\nSuccess Receive"
+        android:textAllCaps="false"
+        android:textSize="18sp" />
+
+    <Button
         android:id="@+id/btnCoroutineNetworkError"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         android:backgroundTint="#D81B60"
         android:text="Network Error"
         android:textAllCaps="false"

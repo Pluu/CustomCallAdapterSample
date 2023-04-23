@@ -20,6 +20,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpViews() {
+        binding.btnCoroutineNetworkErrorDefault.setOnClickListener {
+            viewModel.tryCoroutineNetworkErrorDefault()
+        }
+        binding.btnSuccessCaseDefault.setOnClickListener {
+            viewModel.trySuccessCaseDefault()
+        }
         binding.btnCoroutineNetworkError.setOnClickListener {
             viewModel.tryCoroutineNetworkError()
         }

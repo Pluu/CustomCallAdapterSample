@@ -5,9 +5,16 @@ import com.pluu.retrofit.adapter.apiresult.ApiResult
 import retrofit2.http.GET
 
 interface GitHubService {
+
     @GET("/users/Pluu")
-    suspend fun suspendGetUser(): ApiResult<User>
+    suspend fun getUserDefault(): User
 
     @GET("/error")
-    suspend fun suspendTryNetworkError(): ApiResult<User>
+    suspend fun tryNetworkErrorDefault(): User
+
+    @GET("/users/Pluu")
+    suspend fun getUser(): ApiResult<User>
+
+    @GET("/error")
+    suspend fun tryNetworkError(): ApiResult<User>
 }
