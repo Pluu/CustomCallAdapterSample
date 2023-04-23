@@ -37,13 +37,12 @@ interface GitHubService {
 ```kotlin
 // Type 1 : default
 viewModelScope.launch {
-  val apiResult = api.getUser()
-  when {
-    apiResult.isSuccess() -> {
-      // TODO, success action (ex: apiResult.result())
+  when (api.getUser()) {
+    is ApiResult.Success -> {
+      // TODO, success action
     }
     else -> {
-      // TODO, fail action (ex: apiResult.error())
+      // TODO, fail action
     }
   }
 }
