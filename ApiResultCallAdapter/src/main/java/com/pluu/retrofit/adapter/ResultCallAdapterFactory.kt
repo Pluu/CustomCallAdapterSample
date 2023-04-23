@@ -1,6 +1,5 @@
 package com.pluu.retrofit.adapter
 
-import com.pluu.retrofit.adapter.error.ApiError
 import retrofit2.Call
 import retrofit2.CallAdapter
 import retrofit2.Retrofit
@@ -55,18 +54,19 @@ class ResultCallAdapterFactory : CallAdapter.Factory() {
         val wrapperType = getParameterUpperBound(0, returnType)
         return when (getRawType(wrapperType)) {
             ApiResult::class.java -> {
-                val (_, bodyType) = extractErrorAndReturnType(wrapperType, returnType)
+                val bodyType = extractReturnType(wrapperType, returnType)
                 ApiResultCallAdapter(bodyType)
             }
+
             else -> null
         }
     }
 
     @Suppress("NOTHING_TO_INLINE")
-    private inline fun extractErrorAndReturnType(
+    private inline fun extractReturnType(
         wrapperType: Type,
         returnType: ParameterizedType
-    ): Pair<Type, Type> {
+    ): Type {
         if (wrapperType !is ParameterizedType) {
             val name = parseTypeName(returnType)
             throw IllegalArgumentException(
@@ -74,7 +74,7 @@ class ResultCallAdapterFactory : CallAdapter.Factory() {
                         "$name<ErrorBody, ResponseBody> or $name<out ErrorBody, out ResponseBody>"
             )
         }
-        return ApiError::class.java to getParameterUpperBound(0, wrapperType)
+        return getParameterUpperBound(0, wrapperType)
     }
 }
 

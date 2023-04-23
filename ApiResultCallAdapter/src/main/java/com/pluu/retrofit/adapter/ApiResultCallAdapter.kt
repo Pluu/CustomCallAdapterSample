@@ -1,6 +1,5 @@
 package com.pluu.retrofit.adapter
 
-import com.pluu.retrofit.adapter.error.ApiError
 import okhttp3.Request
 import okio.Timeout
 import retrofit2.Call
@@ -35,11 +34,11 @@ private class ApiResultCall<R>(
                 // Http error response (4xx - 5xx)
                 if (!isSuccessful) {
                     val errorBody = errorBody()!!.string()
-                    return ApiError.HttpError(
+                    return ApiResult.Failure.HttpError(
                         code = code(),
                         message = message(),
                         body = errorBody
-                    ).toApiResult()
+                    )
                 }
 
                 // Http success response with body
@@ -51,23 +50,23 @@ private class ApiResultCall<R>(
                     @Suppress("UNCHECKED_CAST")
                     ApiResult.successOf(Unit as R)
                 } else {
-                    ApiError.UnknownApiError(
+                    ApiResult.Failure.UnknownApiError(
                         IllegalStateException(
                             "Response code is ${code()} but body is null.\n" +
                                     "If you expect response body to be null then define your API method as returning Unit:\n" +
                                     "@POST fun postSomething(): Either<CallError, Unit>"
                         )
-                    ).toApiResult()
+                    )
                 }
             }
 
             override fun onFailure(call: Call<R?>, throwable: Throwable) {
                 val error = if (throwable is IOException) {
-                    ApiError.NetworkError(throwable)
+                    ApiResult.Failure.NetworkError(throwable)
                 } else {
-                    ApiError.UnknownApiError(throwable)
+                    ApiResult.Failure.UnknownApiError(throwable)
                 }
-                callback.onResponse(this@ApiResultCall, Response.success(error.toApiResult()))
+                callback.onResponse(this@ApiResultCall, Response.success(error))
             }
         }
     )
