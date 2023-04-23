@@ -10,8 +10,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Coroutine Case"
-        android:textSize="20sp"
+        android:text="Test Case"
+        android:textSize="40sp"
         android:textStyle="bold" />
 
     <Button
@@ -20,7 +20,8 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#D81B60"
         android:text="Network Error"
-        android:textAllCaps="false" />
+        android:textAllCaps="false"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/btnSuccessCase"
@@ -28,6 +29,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#D81B60"
         android:text="Success Receive"
-        android:textAllCaps="false" />
+        android:textAllCaps="false"
+        android:textSize="18sp" />
 
 </LinearLayout>
