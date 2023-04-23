@@ -13,7 +13,7 @@ object DataSource {
             HttpLoggingInterceptor { message ->
                 logcat { message }
             }.apply {
-                this.setLevel(HttpLoggingInterceptor.Level.BASIC)
+                this.setLevel(HttpLoggingInterceptor.Level.BODY)
             }
         )
         .build()
