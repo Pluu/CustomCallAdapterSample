@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.pluu.calladapter.sample.data.DataSource
 import com.pluu.calladapter.sample.data.GitHubService
 import com.pluu.calladapter.sample.data.model.User
+import com.pluu.calladapter.sample.ui.model.ErrorBundle
 import com.pluu.retrofit.adapter.apiresult.onFailure
 import com.pluu.retrofit.adapter.apiresult.onSuccess
 import kotlinx.coroutines.launch
@@ -44,12 +45,4 @@ class MainViewModel : ViewModel() {
                 }
         }
     }
-}
-
-data class ErrorBundle(
-    val throwable: Throwable
-)
-
-private fun Throwable.printError() {
-    logcat { "Error [Thread=${Thread.currentThread().name}]: $message" }
 }
