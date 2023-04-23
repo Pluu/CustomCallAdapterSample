@@ -1,6 +1,6 @@
-package com.pluu.retrofit.adapter.apiresult
+package com.pluu.retrofit.adapter
 
-import com.pluu.retrofit.adapter.apiresult.error.ApiError
+import com.pluu.retrofit.adapter.error.ApiError
 import okhttp3.Request
 import okio.Timeout
 import retrofit2.Call

@@ -1,6 +1,6 @@
 package com.pluu.calladapter.sample.data
 
-import com.pluu.retrofit.adapter.apiresult.ResultCallAdapterFactory
+import com.pluu.retrofit.adapter.ResultCallAdapterFactory
 import logcat.logcat
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

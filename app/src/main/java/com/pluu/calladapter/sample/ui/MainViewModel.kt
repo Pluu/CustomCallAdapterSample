@@ -8,8 +8,8 @@ import com.pluu.calladapter.sample.data.DataSource
 import com.pluu.calladapter.sample.data.GitHubService
 import com.pluu.calladapter.sample.data.model.User
 import com.pluu.calladapter.sample.ui.model.ErrorBundle
-import com.pluu.retrofit.adapter.apiresult.onFailure
-import com.pluu.retrofit.adapter.apiresult.onSuccess
+import com.pluu.retrofit.adapter.onFailure
+import com.pluu.retrofit.adapter.onSuccess
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import logcat.logcat

@@ -1,7 +1,7 @@
 package com.pluu.calladapter.sample.data
 
 import com.pluu.calladapter.sample.data.model.User
-import com.pluu.retrofit.adapter.apiresult.ApiResult
+import com.pluu.retrofit.adapter.ApiResult
 import retrofit2.http.GET
 
 interface GitHubService {

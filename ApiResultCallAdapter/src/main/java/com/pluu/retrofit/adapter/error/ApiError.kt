@@ -1,4 +1,4 @@
-package com.pluu.retrofit.adapter.apiresult.error
+package com.pluu.retrofit.adapter.error
 
 sealed class ApiError {
     data class HttpError(val code: Int, val message: String, val body: String) : ApiError()

@@ -1,6 +1,6 @@
-package com.pluu.retrofit.adapter.apiresult
+package com.pluu.retrofit.adapter
 
-import com.pluu.retrofit.adapter.apiresult.error.ApiError
+import com.pluu.retrofit.adapter.error.ApiError
 
 class ApiResult<out R> {
     private var success: R? = null

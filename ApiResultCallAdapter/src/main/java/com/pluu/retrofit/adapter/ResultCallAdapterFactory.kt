@@ -1,6 +1,6 @@
-package com.pluu.retrofit.adapter.apiresult
+package com.pluu.retrofit.adapter
 
-import com.pluu.retrofit.adapter.apiresult.error.ApiError
+import com.pluu.retrofit.adapter.error.ApiError
 import retrofit2.Call
 import retrofit2.CallAdapter
 import retrofit2.Retrofit
