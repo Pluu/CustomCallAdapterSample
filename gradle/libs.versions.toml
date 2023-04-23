@@ -1,0 +1,29 @@
+[versions]
+okhttp = '4.10.0'
+retrofit = '2.9.0'
+
+[libraries]
+androidX-activity-ktx = "androidx.activity:activity-ktx:1.7.1"
+androidX-appcompat = "androidx.appcompat:appcompat:1.6.1"
+androidX-constraintlayout = "androidx.constraintlayout:constraintlayout:2.1.4"
+androidX-core-ktx = "androidx.core:core-ktx:1.10.0"
+google-material = "com.google.android.material:material:1.8.0"
+
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+
+kotlin-coroutine = 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+
+square-logcat = "com.squareup.logcat:logcat:0.1"
+
+test-junit = 'junit:junit:4.13.2'
+androidX-test-junit = 'androidx.test.ext:junit:1.1.5'
+androidX-test-espresso = 'androidx.test.espresso:espresso-core:3.5.1'
+
+[bundles]
+retrofit = [
+    "retrofit",
+    "retrofit-converter-gson",
+    "okhttp-logging"
+]

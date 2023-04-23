@@ -9,6 +9,5 @@ java {
 }
 
 dependencies {
-    def retrofit = '2.9.0'
-    compileOnly "com.squareup.retrofit2:retrofit:$retrofit"
+    compileOnly libs.retrofit
 }
