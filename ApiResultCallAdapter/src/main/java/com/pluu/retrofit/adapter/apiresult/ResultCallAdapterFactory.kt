@@ -1,8 +1,6 @@
 package com.pluu.retrofit.adapter.apiresult
 
 import com.pluu.retrofit.adapter.apiresult.error.ApiError
-import com.pluu.retrofit.adapter.apiresult.network.ApiResultCallAdapter
-import com.pluu.retrofit.adapter.apiresult.network.NonApiErrorApiResultCallAdapter
 import retrofit2.Call
 import retrofit2.CallAdapter
 import retrofit2.Retrofit
@@ -26,31 +24,20 @@ class ResultCallAdapterFactory : CallAdapter.Factory() {
         }
 
         return when (rawType) {
-            Call::class.java -> apiResultAdapter(returnType, retrofit)
+            Call::class.java -> apiResultAdapter(returnType)
             else -> null
         }
     }
 
     private fun apiResultAdapter(
-        returnType: ParameterizedType,
-        retrofit: Retrofit
+        returnType: ParameterizedType
     ): CallAdapter<Type, out Call<out Any>>? {
         val wrapperType = getParameterUpperBound(0, returnType)
         return when (getRawType(wrapperType)) {
             ApiResult::class.java -> {
-                val (errorType, bodyType) = extractErrorAndReturnType(wrapperType, returnType)
-                if (errorType == ApiError::class.java) {
-                    ApiResultCallAdapter(bodyType)
-                } else {
-                    NonApiErrorApiResultCallAdapter(retrofit, errorType, bodyType)
-                }
+                val (_, bodyType) = extractErrorAndReturnType(wrapperType, returnType)
+                ApiResultCallAdapter(bodyType)
             }
-
-//            ResponseW::class.java -> {
-//                val (errorType, bodyType) = extractErrorAndReturnType(wrapperType, returnType)
-//                ResultCallResponseAdapter(retrofit, errorType, bodyType)
-//            }
-
             else -> null
         }
     }
