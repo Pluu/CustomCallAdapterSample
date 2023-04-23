@@ -1,6 +1,10 @@
 [versions]
+androidGradlePlugin = "8.0.0"
+
 okhttp = '4.10.0'
 retrofit = '2.9.0'
+
+kotlin = '1.8.20'
 
 [libraries]
 androidX-activity-ktx = "androidx.activity:activity-ktx:1.7.1"
@@ -27,3 +31,10 @@ retrofit = [
     "retrofit-converter-gson",
     "okhttp-logging"
 ]
+
+[plugins]
+
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
