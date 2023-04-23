@@ -7,6 +7,26 @@ import retrofit2.Retrofit
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
+/**
+ * A [CallAdapter.Factory] which supports suspend + [ApiResult] as the return type
+ *
+ * Adding this to [Retrofit] will enable you to return [ApiResult] from your service methods.
+ *
+ * ```kotlin
+ * import com.pluu.retrofit.adapter.ApiResult
+ * import retrofit2.http.GET
+ *
+ * data class User(val name: String)
+ *
+ * interface GitHubService {
+ *   @GET("/users/Pluu")
+ *   suspend fun getUser(): ApiResult<User>
+ *
+ *   @GET("/error")
+ *   suspend fun tryNetworkError(): ApiResult<User>
+ * }
+ * ```
+ */
 class ResultCallAdapterFactory : CallAdapter.Factory() {
     override fun get(
         returnType: Type,
