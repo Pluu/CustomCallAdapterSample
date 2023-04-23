@@ -1,7 +1,8 @@
 # Retrofit Custom CallAdapter.Factory
 
+> 참고 : [Retrofit CallAdapter for Either type](https://proandroiddev.com/retrofit-calladapter-for-either-type-2145781e1c20)
+> 
 > 참고 : [Arrow Retrofit](https://github.com/arrow-kt/arrow/tree/main/arrow-libs/core/arrow-core-retrofit)
-
 
 
 ### Define Retrofit Service
