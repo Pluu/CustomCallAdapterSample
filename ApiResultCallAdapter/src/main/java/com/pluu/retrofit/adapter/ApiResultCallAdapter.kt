@@ -54,7 +54,7 @@ private class ApiResultCall<R>(
                         IllegalStateException(
                             "Response code is ${code()} but body is null.\n" +
                                     "If you expect response body to be null then define your API method as returning Unit:\n" +
-                                    "@POST fun postSomething(): Either<CallError, Unit>"
+                                    "@POST fun postSomething(): ApiResult<Unit>"
                         )
                     )
                 }
